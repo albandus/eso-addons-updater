@@ -239,7 +239,7 @@ def main() -> None:
         "--action",
         help="what to do with plugins to update. list: only list plugins to update in output",
         choices=["list", "update"],
-        required=True,
+        default="list",
     )
 
     cfg = parser.parse_args()
