@@ -44,12 +44,14 @@ def local_list_update(
         txt = plugin.get("txt", f"{name}.txt")
         txt = f"{dir_list[name]}/{txt}"
         if not os.access(txt, os.R_OK):
-            logger.error(f"txt not found or not readable, file: {txt}")
+            txt = f"{dir_list[name]}/{name}.addon"
+        if not os.access(txt, os.R_OK):
+            logger.error(f"txt/addon not found or not readable, file: {txt}")
             continue
         # Not sure of proper encoding in plugin files, added "errors=replace" to avoid exception
         txt_content = Path(txt).read_text(errors="replace")
         re_result = re.search("## Version: (.+)", txt_content)
-        if re_result == None:
+        if re_result is None:
             logger.error(f"plugin version in local txt file not found, file: {txt}")
             continue
         plugin["local_version"] = re_result.group(1)
@@ -101,7 +103,11 @@ def remote_version_update(
             logger.warning(f"could not find download link for plugin: {name}")
             plugins[name]["download_url"] = False
             continue
-        downPage = requests.get("https://www.esoui.com" + download["href"]).text
+        try:
+            downPage = requests.get("https://www.esoui.com" + download["href"]).text
+        except Exception:
+            logger.warning(f"could not find download link for plugin: {name}")
+            continue
         downSoup = BeautifulSoup(downPage, "html.parser")
         download = downSoup.find("div", class_="manuallink").find("a")
         if download is None:
