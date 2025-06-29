@@ -178,10 +178,12 @@ def move_plugins(tmpdir: str, addons_path: str, obsolete_versions_dir: str) -> N
     with os.scandir(tmpdir) as it:
         for entry in it:
             if entry.is_dir():
-                shutil.move(
-                    f"{addons_path}/{entry.name}",
-                    f"{obsolete_versions_dir}/{entry.name}",
-                )
+                existing_plugin_path = f"{addons_path}/{entry.name}"
+                if os.path.exists(existing_plugin_path):
+                    shutil.move(
+                        existing_plugin_path,
+                        f"{obsolete_versions_dir}/{entry.name}",
+                    )
                 shutil.move(f"{tmpdir}/{entry.name}", f"{addons_path}")
 
 

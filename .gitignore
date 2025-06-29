@@ -1,3 +1,4 @@
-config_backup.json
 __pycache__/
 config.json
+config_backup.json
+old/
