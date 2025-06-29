@@ -125,7 +125,7 @@ def get_list_to_update(plugins: dict[str, dict[str, Any]]) -> list[str]:
     for name, plugin in plugins.items():
         try:
             vremote = plugin["remote_version"]
-            vlocal = plugin["local_version"]
+            vlocal = plugin.get("trusted_version", plugin["local_version"])
         except KeyError:
             logger.error(
                 f"cannot check if plugin {name} need update: missing version local/remote"
@@ -156,10 +156,21 @@ def print_list_to_update(
         max_len = max(len(name), max_len)
     max_len += 1
 
-    print(f"{'Plugin'.ljust(max_len)} {'Local version':<20} {'Remote Version':<20} URL")
+    print(
+        f"{'Plugin'.ljust(max_len)} {'Local version':<20} {'Trusted version':<20} {'Remote Version':<20} URL"
+    )
     for name in to_update:
+        local_ver = plugins[name]["local_version"]
+        trusted_ver = plugins[name].get("trusted_version", "N/A")
+        remote_ver = plugins[name]["remote_version"]
+
+        # Show warning if local and trusted versions differ (when trusted version exists)
+        version_display = local_ver
+        if trusted_ver != "N/A" and trusted_ver != local_ver:
+            version_display = f"{local_ver} (!={trusted_ver})"
+
         print(
-            f"{name.ljust(max_len)} {plugins[name]['local_version'].ljust(20)} {plugins[name]['remote_version'].ljust(20)} {plugins[name]['url']}"
+            f"{name.ljust(max_len)} {version_display.ljust(20)} {trusted_ver.ljust(20)} {remote_ver.ljust(20)} {plugins[name]['url']}"
         )
 
 
@@ -196,6 +207,15 @@ def download_new_versions(
         r = requests.get(plugins[name]["download_url"])
         z = zipfile.ZipFile(io.BytesIO(r.content))
         z.extractall(tmpdir)
+
+
+def set_trusted_versions_after_update(
+    to_update: list[str], plugins: dict[str, dict[str, Any]]
+) -> None:
+    """Set trusted version to the remote version for updated plugins."""
+    for name in to_update:
+        if "remote_version" in plugins[name]:
+            plugins[name]["trusted_version"] = plugins[name]["remote_version"]
 
 
 def main() -> None:
@@ -314,6 +334,7 @@ def main() -> None:
             move_plugins(
                 tmpdir.name, config["addons_path"], config["addons_obsolete_path"]
             )
+            set_trusted_versions_after_update(to_update, plugins)
 
     # Remove URLs from plugins data before saving
     plugins_to_save = {}
