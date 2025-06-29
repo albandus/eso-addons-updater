@@ -1,0 +1,314 @@
+{
+  "AF_DungeonSetFilters": {
+    "url": "https://www.esoui.com/downloads/info3608-AdvancedFilters-Dungeonsetsfilter.html"
+  },
+  "AF_TTC": {
+    "url": "https://www.esoui.com/downloads/info2794-AdvancedFilters-TTCFilters.html"
+  },
+  "AUI": {
+    "url": "https://www.esoui.com/downloads/info919-AUI-AdvancedUI.html"
+  },
+  "ActionDurationReminder": {
+    "url": "https://www.esoui.com/downloads/info1536-ActionDurationReminder.html"
+  },
+  "AdvancedFilters": {
+    "url": "https://www.esoui.com/downloads/info2215-AdvancedFilters-Updated.html"
+  },
+  "AdvancedGameSettings": {
+    "url": "https://www.esoui.com/downloads/info3173-AdvancedGameSettings.html"
+  },
+  "ArkadiusTradeTools": {
+    "url": "https://www.esoui.com/downloads/info1752-ArkadiusTradeTools.html"
+  },
+  "AwesomeGuildStore": {
+    "url": "https://www.esoui.com/downloads/info695-AwesomeGuildStore.html"
+  },
+  "BanditsCompanions": {
+    "url": "https://www.esoui.com/downloads/info3158-BanditsCompanions.html"
+  },
+  "BanditsUserInterface": {
+    "url": "https://www.esoui.com/downloads/info1643-BanditsUserInterface.html"
+  },
+  "BeamMeUp": {
+    "url": "https://www.esoui.com/downloads/info2143-BeamMeUp-TeleporterFastTravel.html"
+  },
+  "CharacterKnowledge": {
+    "url": "https://www.esoui.com/downloads/info2938-CharacterKnowledge.html"
+  },
+  "CombatAlerts": {
+    "url": "https://www.esoui.com/downloads/info1855-CodesCombatAlerts.html"
+  },
+  "CombatMetrics": {
+    "url": "https://www.esoui.com/downloads/info1360-CombatMetrics.html"
+  },
+  "CrutchAlerts": {
+    "url": "https://www.esoui.com/downloads/info3137-CrutchAlerts.html"
+  },
+  "CustomItemNotes": {
+    "url": "https://www.esoui.com/downloads/info3027-CustomItemNotes.html"
+  },
+  "DailyAlchemy": {
+    "url": "https://www.esoui.com/downloads/info1899-DailyAlchemy.html"
+  },
+  "DailyProvisioning": {
+    "url": "https://www.esoui.com/downloads/info1901-DailyProvisioning.html"
+  },
+  "DolgubonsLazyWritCreator": {
+    "url": "https://www.esoui.com/downloads/info1346-DolgubonsLazyWritCrafter.html"
+  },
+  "DungeonQueue4Stickerbook": {
+    "url": "https://www.esoui.com/downloads/info3254-DungeonQueue4Stickerbook.html"
+  },
+  "Emacs": {
+    "url": "https://www.esoui.com/downloads/info1046-Emacs.html"
+  },
+  "EssentialHousingTools": {
+    "url": "https://www.esoui.com/downloads/info1959-EssentialHousingTools.html"
+  },
+  "FCOItemSaver": {
+    "url": "https://www.esoui.com/downloads/info630-FCOItemSaver.html"
+  },
+  "GuildDonate": {
+    "url": "https://www.esoui.com/downloads/info2266-GuildDonate.html"
+  },
+  "HarvestMap": {
+    "url": "https://www.esoui.com/downloads/info57-HarvestMap.html"
+  },
+  "HodorReflexes": {
+    "url": "https://www.esoui.com/downloads/info2311-HodorReflexes-DPSUltimateShare.html"
+  },
+  "HowToSunspire": {
+    "url": "https://www.esoui.com/downloads/info2430-HowToSunspire.html"
+  },
+  "IIfA": {
+    "url": "https://www.esoui.com/downloads/info731-InventoryInsight.html"
+  },
+  "InventoryManager": {
+    "url": "https://www.esoui.com/downloads/info1642-InventoryManager.html"
+  },
+  "ItemBrowser": {
+    "url": "https://www.esoui.com/downloads/info1480-ItemSetBrowser.html"
+  },
+  "JournalQuestLog": {
+    "url": "https://www.esoui.com/downloads/info1785-JournalQuestLog.html"
+  },
+  "LazyDecon": {
+    "url": "https://www.esoui.com/downloads/info3449-LazyDeconstructor.html"
+  },
+  "LibAddonMenu-2.0": {
+    "url": "https://www.esoui.com/downloads/info7-LibAddonMenu.html"
+  },
+  "LibAddonMenuOrderListBox": {
+    "url": "https://www.esoui.com/downloads/info3080-LibAddonMenu-OrderListBoxwidget.html"
+  },
+  "LibAddonMenuSoundSlider": {
+    "url": "https://www.esoui.com/downloads/info3346-LibAddonMenu-SoundSliderwidget.html"
+  },
+  "LibAlchemy": {
+    "url": "https://www.esoui.com/downloads/info2618-LibAlchemy.html"
+  },
+  "LibAlchemyStation": {
+    "url": "https://www.esoui.com/downloads/info2628-LibAlchemyStation.html"
+  },
+  "LibAnnyoingUpdateNotificationInGame": {
+    "url": "https://www.esoui.com/downloads/info1488-LibAnnyoingUpdateNotificationInGame-Launig.html"
+  },
+  "LibAsync": {
+    "url": "https://www.esoui.com/downloads/info2125-LibAsync.html"
+  },
+  "LibChatMessage": {
+    "url": "https://www.esoui.com/downloads/info2382-LibChatMessage.html"
+  },
+  "LibCombat": {
+    "url": "https://www.esoui.com/downloads/info2528-LibCombat.html"
+  },
+  "LibCustomMenu": {
+    "url": "https://www.esoui.com/downloads/info1146-LibCustomMenu.html"
+  },
+  "LibDataEncode": {
+    "url": "https://www.esoui.com/downloads/info3170-WizardsWardrobe.html"
+  },
+  "LibDataShare": {
+    "url": "https://www.esoui.com/downloads/info3297-LibDataShare.html"
+  },
+  "LibDateTime": {
+    "url": "https://www.esoui.com/downloads/info2277-LibDateTime.html"
+  },
+  "LibDebugLogger": {
+    "url": "https://www.esoui.com/downloads/info2275-LibDebugLogger.html"
+  },
+  "LibDialog": {
+    "url": "https://www.esoui.com/downloads/info1931-LibDialog-Customconfirmationdialogwith2buttons.html"
+  },
+  "LibFeedback": {
+    "url": "https://www.esoui.com/downloads/info2079-LibFeedback.html"
+  },
+  "LibFilters-3.0": {
+    "url": "https://www.esoui.com/downloads/info2343-LibFilters-3.0.html"
+  },
+  "LibGPS": {
+    "url": "https://www.esoui.com/downloads/info601-LibGPS.html"
+  },
+  "LibGetText": {
+    "url": "https://www.esoui.com/downloads/info2276-LibGetText.html"
+  },
+  "LibGroupBroadcast": {
+    "url": "https://www.esoui.com/downloads/info1337-LibGroupSocket.html"
+  },
+  "LibGroupCombatStats": {
+    "url": "https://www.esoui.com/downloads/info4024-LibGroupCombatStats.html"
+  },
+  "LibGuildRoster": {
+    "url": "https://www.esoui.com/downloads/info2784-LibGuildRoster.html"
+  },
+  "LibHistoire": {
+    "url": "https://www.esoui.com/downloads/info2817-LibHistoire-GuildHistory.html"
+  },
+  "LibId64": {
+    "url": "https://www.esoui.com/downloads/info3585-LibId64.html"
+  },
+  "LibLazyCrafting": {
+    "url": "https://www.esoui.com/downloads/info1594-LibLazyCrafting.html"
+  },
+  "LibMainMenu-2.0": {
+    "url": "https://www.esoui.com/downloads/info2118-LibMainMenu-2.0.html"
+  },
+  "LibMapData": {
+    "url": "https://www.esoui.com/downloads/info3353-LibMapData.html"
+  },
+  "LibMapPing": {
+    "url": "https://www.esoui.com/downloads/info1302-LibMapPing.html"
+  },
+  "LibMapPins-1.0": {
+    "url": "https://www.esoui.com/downloads/info563-LibMapPins.html"
+  },
+  "LibMarify": {
+    "url": "https://www.esoui.com/downloads/info2542-LibMarify.html"
+  },
+  "LibMediaProvider-1.0": {
+    "url": "https://www.esoui.com/downloads/info56-LibMediaProvider.html"
+  },
+  "LibMultiAccountSets": {
+    "url": "https://www.esoui.com/downloads/info2843-LibMultiAccountSets.html"
+  },
+  "LibPrice": {
+    "url": "https://www.esoui.com/downloads/info2204-LibPrice.html"
+  },
+  "LibPromises": {
+    "url": "https://www.esoui.com/downloads/info2274-LibPromises.html"
+  },
+  "LibQuestData": {
+    "url": "https://www.esoui.com/downloads/info2625-LibQuestData.html"
+  },
+  "LibSavedVars": {
+    "url": "https://www.esoui.com/downloads/info2161-LibSavedVars.html"
+  },
+  "LibScrollableMenu": {
+    "url": "https://esoui.com/downloads/info3546-LibScrollableMenu.html"
+  },
+  "LibSets": {
+    "url": "https://www.esoui.com/downloads/info2241-LibSets.html"
+  },
+  "LibShifterBox": {
+    "url": "https://www.esoui.com/downloads/info2444-LibShifterBox.html"
+  },
+  "LibTableFunctions-1.0": {
+    "url": "https://www.esoui.com/downloads/info2624-LibTableFunctions-1.0.html"
+  },
+  "LibTextFilter": {
+    "url": "https://www.esoui.com/downloads/info1311-LibTextFilter.html"
+  },
+  "LibUespQuestData": {
+    "url": "https://www.esoui.com/downloads/info2484-LibUespQuestData.html"
+  },
+  "LibZone": {
+    "url": "https://www.esoui.com/downloads/info2171-LibZone.html"
+  },
+  "LootLog": {
+    "url": "https://www.esoui.com/downloads/info1455-LootLog.html"
+  },
+  "MapPins": {
+    "url": "https://www.esoui.com/downloads/info1881-MapPins.html"
+  },
+  "MasterMerchant": {
+    "url": "https://www.esoui.com/downloads/info2753-MasterMerchant3.0.html"
+  },
+  "Overview": {
+    "url": "https://www.esoui.com/downloads/info1778-Overview-ShowyourBuild.html"
+  },
+  "PerfectJournalQuestLog": {
+    "url": "https://www.esoui.com/downloads/info3662-PerfectPixel-JournalQuestLog.html"
+  },
+  "PerfectPixel": {
+    "url": "https://www.esoui.com/downloads/info2103-PerfectPixel.html"
+  },
+  "PithkaAchievementTracker": {
+    "url": "https://www.esoui.com/downloads/info2892-PithkasAchievementTracker.html"
+  },
+  "PlayerRoleIndicator": {
+    "url": "https://www.esoui.com/downloads/info2703-PlayerRoleIndicator.html"
+  },
+  "PortToFriendsHouse": {
+    "url": "https://www.esoui.com/downloads/info1758-PorttoFriendsHouse.html"
+  },
+  "PotionMaker": {
+    "url": "https://www.esoui.com/downloads/info405-PotionMakerforAlchemyCrafting.html"
+  },
+  "QcellRockgroveHelper": {
+    "url": "https://www.esoui.com/downloads/info3060-QcellsRockgroveHelper.html"
+  },
+  "QuestMap": {
+    "url": "https://www.esoui.com/downloads/info1022-QuestMap.html"
+  },
+  "RaidNotifier": {
+    "url": "https://www.esoui.com/downloads/info1355-RaidNotifierUpdated.html"
+  },
+  "RareFishTracker": {
+    "url": "https://www.esoui.com/downloads/info665-RareFishTracker.html"
+  },
+  "Roomba": {
+    "url": "https://www.esoui.com/downloads/info402-Roomba-GuildbankStacker.html"
+  },
+  "ShutYerTrap": {
+    "url": "https://esoui.com/downloads/info3429-ShutYerTrap-MuteNPCs.html"
+  },
+  "TakeOne": {
+    "url": "https://www.esoui.com/downloads/info3076-TakeOne.html"
+  },
+  "TamrielTradeCentre": {
+    "url": "https://www.esoui.com/downloads/info1245-TamrielTradeCentre.html"
+  },
+  "TraitBuddy": {
+    "url": "https://www.esoui.com/downloads/info1058-TraitBuddy.html"
+  },
+  "TurningTide": {
+    "url": "https://www.esoui.com/downloads/info3330-TurningTide.html"
+  },
+  "USPF": {
+    "url": "https://www.esoui.com/downloads/info1863-UrichsSkillPointFinder.html"
+  },
+  "Untaunted": {
+    "url": "https://www.esoui.com/downloads/info1475-Untaunted.html"
+  },
+  "VotansFisherman": {
+    "url": "https://www.esoui.com/downloads/info918-VotansFisherman.html"
+  },
+  "VotansKeybinder": {
+    "url": "https://www.esoui.com/downloads/info1174-VotansKeybinder.html"
+  },
+  "WizardsWardrobe": {
+    "url": "https://www.esoui.com/downloads/info3170-WizardsWardrobe.html"
+  },
+  "WritWorthy": {
+    "url": "https://www.esoui.com/downloads/info1605-WritWorthy.html"
+  },
+  "libAddonKeybinds": {
+    "url": "https://www.esoui.com/downloads/info1253-libAddonKeybinds.html"
+  },
+  "pChat": {
+    "url": "https://www.esoui.com/downloads/info93-pChat.html"
+  },
+  "tralceCollectibles": {
+    "url": "https://www.esoui.com/downloads/info2907-tralcesCollectibleKeybinds-CompanionsArmoryAssistantsDeconandmore.html"
+  }
+}

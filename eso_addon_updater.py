@@ -10,12 +10,14 @@ import sys
 import tempfile
 import zipfile
 from datetime import datetime, timedelta
-from typing import Any
 from pathlib import Path
+from typing import Any
 
 import requests
 from bs4 import BeautifulSoup
 from loguru import logger
+
+PLUGINS_FILE = "plugins.json"
 
 
 def get_dir_list(path: Path) -> dict[str, str]:
@@ -199,17 +201,24 @@ def main() -> None:
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
     parser.add_argument(
-        "--data_file",
+        "--action",
+        help="what to do with plugins to update. list: only list plugins to update in output",
+        choices=["list", "update"],
+        default="list",
+    )
+    parser.add_argument(
+        "--config_file",
         help="config and data file: path to game, plugins list with versions",
         type=Path,
         default=Path("./config.json"),
     )
     parser.add_argument(
-        "--data_file_backup",
-        help="backup data file, in case of issue (tool overwrites it each time). empty string to disable",
+        "--config_backup",
+        help="backup config file, in case of issue (tool overwrites it each time), mpty string to disable",
         type=Path,
         default=Path("./config_backup.json"),
     )
+
     parser.add_argument(
         "--lib_log_level",
         help="log level to use for logs in libraries, value must be a valid python logging level",
@@ -234,19 +243,7 @@ def main() -> None:
         type=int,
         default=100,
     )
-    parser.add_argument(
-        "--default_data_file",
-        help="data file for initialization when main one does not exist",
-        type=argparse.FileType("r"),
-        default="default_data_file.json",
-    )
 
-    parser.add_argument(
-        "--action",
-        help="what to do with plugins to update. list: only list plugins to update in output",
-        choices=["list", "update"],
-        default="list",
-    )
 
     cfg = parser.parse_args()
     logger.remove()
@@ -262,38 +259,68 @@ def main() -> None:
         force=True,
     )
 
-    default_data = json.load(cfg.default_data_file)
     try:
-        with open(cfg.data_file) as f:
-            data = json.load(f)
-            if cfg.data_file_backup != "":
-                shutil.copy(cfg.data_file, cfg.data_file_backup)
+        with open(cfg.config_file) as f:
+            config = json.load(f)
+            if cfg.config_backup != "":
+                shutil.copy(cfg.config_file, cfg.config_backup)
     except FileNotFoundError:
-        logger.warning("data file not found, building from default")
-        data = default_data
+        logger.error(
+            "config file not found: {}. Please create it first.", cfg.config_file
+        )
+        sys.exit(1)
 
-    dir_list = get_dir_list(data["addons_path"])
-    local_list_update(dir_list, data["plugins"])
-    clean_removed_plugins(data["plugins"], dir_list)
-    to_check = get_list_to_remote_check(data["plugins"], cfg.min_interval)
-    unknown = get_unknown_dirs(dir_list, data["plugins"])
+    # Load plugins information file
+    try:
+        with open(PLUGINS_FILE) as f:
+            plugins_urls = json.load(f)
+    except FileNotFoundError:
+        logger.error(
+            "plugins file not found: {}. Please ensure it exists.", PLUGINS_FILE
+        )
+        sys.exit(1)
+
+    # Get plugins data from config (without URLs)
+    plugins = config.get("plugins", {})
+
+    # Merge URLs into plugins data for processing
+    for plugin_name, plugin_data in plugins.items():
+        if plugin_name in plugins_urls:
+            plugin_data["url"] = plugins_urls[plugin_name]["url"]
+
+    dir_list = get_dir_list(config["addons_path"])
+    local_list_update(dir_list, plugins)
+    clean_removed_plugins(plugins, dir_list)
+    to_check = get_list_to_remote_check(plugins, cfg.min_interval)
+    unknown = get_unknown_dirs(dir_list, plugins)
 
     logger.debug("plugins to check remote version for: {}", to_check)
     if cfg.max_remotes_check > 0 and len(to_check) > 0:
-        remote_version_update(data["plugins"], to_check[: cfg.max_remotes_check])
-    to_update = get_list_to_update(data["plugins"])
+        remote_version_update(plugins, to_check[: cfg.max_remotes_check])
+    to_update = get_list_to_update(plugins)
 
     match cfg.action:
         case "list":
-            print_list_to_update(to_update, data["plugins"])
+            print_list_to_update(to_update, plugins)
             print("Unknown / Ignored dirs:", unknown)
         case "update":
             tmpdir = tempfile.TemporaryDirectory()
-            download_new_versions(to_update, data["plugins"], tmpdir.name)
-            move_plugins(tmpdir.name, data["addons_path"], data["addons_obsolete_path"])
+            download_new_versions(to_update, plugins, tmpdir.name)
+            move_plugins(
+                tmpdir.name, config["addons_path"], config["addons_obsolete_path"]
+            )
 
-    with open(cfg.data_file, "w") as f:
-        json.dump(data, f, indent=2)
+    # Remove URLs from plugins data before saving
+    plugins_to_save = {}
+    for plugin_name, plugin_data in plugins.items():
+        plugin_data_copy = plugin_data.copy()
+        if "url" in plugin_data_copy:
+            del plugin_data_copy["url"]
+        plugins_to_save[plugin_name] = plugin_data_copy
+
+    config["plugins"] = plugins_to_save
+    with open(cfg.config_file, "w") as f:
+        json.dump(config, f, indent=2)
 
 
 # Copy/paste from loguru documentation
