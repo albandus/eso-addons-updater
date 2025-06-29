@@ -244,7 +244,6 @@ def main() -> None:
         default=100,
     )
 
-
     cfg = parser.parse_args()
     logger.remove()
     logger.add(
@@ -273,7 +272,7 @@ def main() -> None:
     # Load plugins information file
     try:
         with open(PLUGINS_FILE) as f:
-            plugins_urls = json.load(f)
+            plugins_data = json.load(f)
     except FileNotFoundError:
         logger.error(
             "plugins file not found: {}. Please ensure it exists.", PLUGINS_FILE
@@ -285,10 +284,14 @@ def main() -> None:
 
     # Merge URLs into plugins data for processing
     for plugin_name, plugin_data in plugins.items():
-        if plugin_name in plugins_urls:
-            plugin_data["url"] = plugins_urls[plugin_name]["url"]
+        if plugin_name in plugins_data:
+            plugin_data["url"] = plugins_data[plugin_name]["url"]
 
     dir_list = get_dir_list(config["addons_path"])
+
+    # Add directories that exist in dir_list and plugins_data but are missing from config
+    add_missing_plugins_from_list(dir_list, plugins, plugins_data)
+
     local_list_update(dir_list, plugins)
     clean_removed_plugins(plugins, dir_list)
     to_check = get_list_to_remote_check(plugins, cfg.min_interval)
@@ -321,6 +324,18 @@ def main() -> None:
     config["plugins"] = plugins_to_save
     with open(cfg.config_file, "w") as f:
         json.dump(config, f, indent=2)
+
+
+def add_missing_plugins_from_list(
+    dir_list: dict[str, str],
+    plugins: dict[str, dict[str, Any]],
+    plugins_data: dict[str, dict[str, Any]],
+) -> None:
+    """Add directories that exist in dir_list and plugins_data but are missing from config plugins."""
+    for dir_name in dir_list:
+        if dir_name not in plugins and dir_name in plugins_data:
+            logger.info(f"Adding plugin {dir_name} from plugins list to config")
+            plugins[dir_name] = {"url": plugins_data[dir_name]["url"]}
 
 
 # Copy/paste from loguru documentation
