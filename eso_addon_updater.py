@@ -243,7 +243,7 @@ def main() -> None:
         "--max_remotes_check",
         help="max number of plugin to check remote version for (avoid spamming esoui website with too many requests)",
         type=int,
-        default=100,
+        default=200,
     )
 
     cfg = parser.parse_args()
