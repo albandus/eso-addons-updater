@@ -92,7 +92,7 @@ def remote_version_update(
         page = requests.get(plugins[name]["url"]).text
         soup = BeautifulSoup(page, "html.parser")
         version = soup.find("div", id="version")
-        if len(version.contents) != 1:
+        if version is None or len(version.contents) != 1:
             logger.error(f"version div not found in crawl result for plugin {name}")
             continue
         re_result = re.search("Version: (.+)", version.string)
