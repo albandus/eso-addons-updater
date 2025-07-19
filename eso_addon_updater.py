@@ -83,13 +83,23 @@ def remote_version_update(
     plugins: dict[str, dict[str, Any]], to_check: list[str]
 ) -> None:
     logger.info("checking remote versions")
+    # Headers to mimic a real browser
+    headers = {
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.5",
+        "DNT": "1",
+        "Connection": "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
+    }
+
     for name in to_check:
         print(".", end="", flush=True)
         if "url" not in plugins[name]:
             logger.error(f"missing url for plugin {name}")
             continue
         plugins[name]["last_crawl"] = datetime.now().isoformat()
-        page = requests.get(plugins[name]["url"]).text
+        page = requests.get(plugins[name]["url"], headers=headers).text
         soup = BeautifulSoup(page, "html.parser")
         version = soup.find("div", id="version")
         if version is None or len(version.contents) != 1:
@@ -106,7 +116,9 @@ def remote_version_update(
             plugins[name]["download_url"] = False
             continue
         try:
-            downPage = requests.get("https://www.esoui.com" + download["href"]).text
+            downPage = requests.get(
+                "https://www.esoui.com" + download["href"], headers=headers
+            ).text
         except Exception:
             logger.warning(f"could not find download link for plugin: {name}")
             continue
