@@ -19,6 +19,16 @@ from loguru import logger
 
 PLUGINS_FILE = "plugins.json"
 
+# Headers to mimic a real browser - used for both scraping and downloading
+HTTP_HEADERS = {
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.5",
+    "DNT": "1",
+    "Connection": "keep-alive",
+    "Upgrade-Insecure-Requests": "1",
+}
+
 
 def get_dir_list(path: Path) -> dict[str, str]:
     dir_list = {}
@@ -83,15 +93,6 @@ def remote_version_update(
     plugins: dict[str, dict[str, Any]], to_check: list[str]
 ) -> None:
     logger.info("checking remote versions")
-    # Headers to mimic a real browser
-    headers = {
-        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.5",
-        "DNT": "1",
-        "Connection": "keep-alive",
-        "Upgrade-Insecure-Requests": "1",
-    }
 
     for name in to_check:
         print(".", end="", flush=True)
@@ -99,7 +100,7 @@ def remote_version_update(
             logger.error(f"missing url for plugin {name}")
             continue
         plugins[name]["last_crawl"] = datetime.now().isoformat()
-        page = requests.get(plugins[name]["url"], headers=headers).text
+        page = requests.get(plugins[name]["url"], headers=HTTP_HEADERS).text
         soup = BeautifulSoup(page, "html.parser")
         version = soup.find("div", id="version")
         if version is None or len(version.contents) != 1:
@@ -117,7 +118,7 @@ def remote_version_update(
             continue
         try:
             downPage = requests.get(
-                "https://www.esoui.com" + download["href"], headers=headers
+                "https://www.esoui.com" + download["href"], headers=HTTP_HEADERS
             ).text
         except Exception:
             logger.warning(f"could not find download link for plugin: {name}")
@@ -215,10 +216,36 @@ def download_new_versions(
 ) -> None:
     for name in to_update:
         if not plugins[name]["download_url"]:
+            logger.warning(f"No download URL for {name}, skipping")
             continue
-        r = requests.get(plugins[name]["download_url"])
-        z = zipfile.ZipFile(io.BytesIO(r.content))
-        z.extractall(tmpdir)
+
+        download_url = plugins[name]["download_url"]
+
+        try:
+            r = requests.get(download_url, headers=HTTP_HEADERS, timeout=30)
+            r.raise_for_status()  # Raises exception for bad status codes
+
+            # Check if the response looks like a zip file
+            if not r.content.startswith(b"PK"):
+                logger.error(
+                    f"Downloaded content for {name} is not a zip file. URL: {download_url}"
+                )
+                logger.debug(f"Content preview: {r.content[:200]}")
+                continue
+
+            z = zipfile.ZipFile(io.BytesIO(r.content))
+            z.extractall(tmpdir)
+            logger.info(f"Successfully extracted {name}")
+
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Failed to download {name} from {download_url}: {e}")
+            continue
+        except zipfile.BadZipFile as e:
+            logger.error(f"Invalid zip file for {name} from {download_url}: {e}")
+            continue
+        except Exception as e:
+            logger.error(f"Unexpected error downloading {name}: {e}")
+            continue
 
 
 def set_trusted_versions_after_update(
